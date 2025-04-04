@@ -58,6 +58,8 @@
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.2);
             display: none;
+            max-width: 600px; /* Ограничение ширины для читаемости */
+            word-wrap: break-word; /* Перенос длинных слов */
         }
 
         .content.active {
@@ -67,6 +69,7 @@
         h1, h2, p {
             color: #fff;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            margin: 10px 0; /* Отступы для текста */
         }
 
         .command {
@@ -103,6 +106,27 @@
             50% { transform: translateY(-50vh) translateX(20px); }
             100% { transform: translateY(0); }
         }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            box-shadow: 0 0 5px #fff, 0 0 10px #ff00ff;
+            animation: fall 2s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-100vw, 100vh);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -119,25 +143,29 @@
 
     <div id="home" class="content active">
         <h1>Добро пожаловать!</h1>
-        <p>На данном сайте вы найдете обьяснение к методам кода ,основанные на открытом коде DDNet</p>
+        <p>На данном сайте вы найдете объяснение к методам кода, основанные на открытом коде DDNet.</p>
     </div>
 
     <div id="commands" class="content">
         <h1>Команды для вкладок меню настроек</h1>
         <div class="command">
-            <h2><span class="material-icons">code</span> <strong>CUIRect</strong></h2>
+            <h2><span class="material-icons">code</span> <strong>CUIRect SomeThing</strong></h2>
             <p><span class="material-icons">book</span> Это структура, представляющая прямоугольную область экрана в пикселях. Она имеет поля x, y (координаты верхнего левого угла), w (ширина) и h (высота). Используется для размещения элементов интерфейса.</p>
-            <p>Пример: <code>git clone https://github.com/username/repo.git</code></p>
+            <p><span class="material-icons">book</span> Переменные: Это экземпляры CUIRect, которые представляют подмодули (секции) внутри вкладки.</p>
+            <p><span class="material-icons">book</span> Каждая переменная — это область, где будут рендериться определённые настройки. Эти области создаются путём разделения основной области (MainView) на части с помощью методов вроде VSplitMid или HSplitTop.</p>
         </div>
         <div class="command">
-            <h2><span class="material-icons">code</span> <strong>git add</strong></h2>
-            <p><span class="material-icons">book</span> Добавляет изменения в индекс для следующего коммита.</p>
-            <p>Пример: <code>git add index.html</code></p>
+            <h2><span class="material-icons">code</span> <strong>VSplitMid</strong></h2>
+            <p><span class="material-icons">book</span> Метод класса CUIRect, который делит прямоугольник вертикально пополам на две новые области.</p>
+            <p>Пример: <code>MainView.VSplitMid(&OtherSettings, &OtherSettings2);</code></p>
+            <p>MainView — исходная область (обычно вся вкладка).</p>
+            <p>&OtherSettings — левая половина.</p>
+            <p>&OtherSettings2 — правая половина.</p>
         </div>
         <div class="command">
-            <h2><span class="material-icons">code</span> <strong>git commit</strong></h2>
-            <p><span class="material-icons">book</span> Сохраняет изменения в локальном репозитории с сообщением.</p>
-            <p>Пример: <code>git commit -m "Добавил новую страницу"</code></p>
+            <h2><span class="material-icons">code</span> <strong>DoLabel</strong></h2>
+            <p><span class="material-icons">book</span> Метод для отображения текстовой метки в заданной области CUIRect. Принимает параметры: прямоугольник, текст, размер шрифта и выравнивание.</p>
+            <p>Пример: <code>UI()->DoLabel(&Rect, "Settings", 20.0f, TEXTALIGN_CENTER);</code></p>
         </div>
     </div>
 
