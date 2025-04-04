@@ -16,6 +16,7 @@
             align-items: center;
             background: #1a1a2e;
             overflow: hidden;
+            font-family: Arial, sans-serif;
         }
 
         .navbar {
@@ -58,29 +59,67 @@
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.2);
             display: none;
-            max-width: 600px; /* Ограничение ширины для читаемости */
-            word-wrap: break-word; /* Перенос длинных слов */
+            max-width: 600px;
+            word-wrap: break-word;
         }
 
         .content.active {
             display: block;
         }
 
-        h1, h2, p {
+        h1 {
             color: #fff;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-            margin: 10px 0; /* Отступы для текста */
+            font-size: 24px;
+            line-height: 1.4;
+            margin: 10px 0;
+        }
+
+        .command h2 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 20px;
+            margin: 10px 0;
+            background: linear-gradient(90deg, #0000ff, #000000, #0000ff, #000000, #0000ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradientShift 2s linear infinite;
+            background-size: 200% 100%;
+        }
+
+        .command h2 .material-icons,
+        .command h2 strong {
+            background: inherit;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        p, li {
+            color: #e0e0e0;
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 8px 0;
         }
 
         .command {
             margin: 15px 0;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
         }
 
         .command strong {
             color: #ff00ff;
         }
 
-        .command h2, .command p {
+        .command p, .command li {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -100,6 +139,9 @@
         .bubble:nth-child(3) { width: 120px; height: 120px; left: 60%; top: 30%; animation-duration: 10s; }
         .bubble:nth-child(4) { width: 60px; height: 60px; left: 80%; top: 70%; animation-duration: 13s; }
         .bubble:nth-child(5) { width: 90px; height: 90px; left: 20%; top: 80%; animation-duration: 11s; }
+        .bubble:nth-child(6) { width: 70px; height: 70px; left: 40%; top: 10%; animation-duration: 14s; }
+        .bubble:nth-child(7) { width: 110px; height: 110px; left: 70%; top: 50%; animation-duration: 9s; }
+        .bubble:nth-child(8) { width: 50px; height: 50px; left: 15%; top: 60%; animation-duration: 11s; }
 
         @keyframes float {
             0% { transform: translateY(0); }
@@ -118,14 +160,8 @@
         }
 
         @keyframes fall {
-            0% {
-                transform: translate(0, 0);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-100vw, 100vh);
-                opacity: 0;
-            }
+            0% { transform: translate(0, 0); opacity: 1; }
+            100% { transform: translate(-100vw, 100vh); opacity: 0; }
         }
     </style>
 </head>
@@ -135,6 +171,9 @@
         <a onclick="showContent('commands')"><span class="material-icons">settings</span> menus_settings</a>
     </div>
 
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
     <div class="bubble"></div>
     <div class="bubble"></div>
     <div class="bubble"></div>
@@ -150,21 +189,23 @@
         <h1>Команды для вкладок меню настроек</h1>
         <div class="command">
             <h2><span class="material-icons">code</span> <strong>CUIRect SomeThing</strong></h2>
-            <p><span class="material-icons">book</span> Это структура, представляющая прямоугольную область экрана в пикселях. Она имеет поля x, y (координаты верхнего левого угла), w (ширина) и h (высота). Используется для размещения элементов интерфейса.</p>
-            <p><span class="material-icons">book</span> Переменные: Это экземпляры CUIRect, которые представляют подмодули (секции) внутри вкладки.</p>
-            <p><span class="material-icons">book</span> Каждая переменная — это область, где будут рендериться определённые настройки. Эти области создаются путём разделения основной области (MainView) на части с помощью методов вроде VSplitMid или HSplitTop.</p>
+            <p>Это структура, представляющая прямоугольную область экрана в пикселях. Она имеет поля x, y (координаты верхнего левого угла), w (ширина) и h (высота). Используется для размещения элементов интерфейса.</p>
+            <p>Переменные: Это экземпляры CUIRect, которые представляют подмодули (секции) внутри вкладки.</p>
+            <p>Каждая переменная — это область, где будут рендериться определённые настройки. Эти области создаются путём разделения основной области (MainView) на части с помощью методов вроде VSplitMid или HSplitTop.</p>
         </div>
         <div class="command">
             <h2><span class="material-icons">code</span> <strong>VSplitMid</strong></h2>
-            <p><span class="material-icons">book</span> Метод класса CUIRect, который делит прямоугольник вертикально пополам на две новые области.</p>
-            <p>Пример: <code>MainView.VSplitMid(&OtherSettings, &OtherSettings2);</code></p>
-            <p>MainView — исходная область (обычно вся вкладка).</p>
-            <p>&OtherSettings — левая половина.</p>
-            <p>&OtherSettings2 — правая половина.</p>
+            <p>Метод класса CUIRect, который делит прямоугольник вертикально пополам на две новые области.</p>
+            <p><strong>Пример:</strong> <code>MainView.VSplitMid(&OtherSettings, &OtherSettings2);</code></p>
+            <ul>
+                <li><span class="material-icons">book</span> <strong>MainView</strong> — исходная область (обычно вся вкладка).</li>
+                <li><span class="material-icons">book</span> <strong>&OtherSettings</strong> — левая половина.</li>
+                <li><span class="material-icons">book</span> <strong>&OtherSettings2</strong> — правая половина.</li>
+            </ul>
         </div>
         <div class="command">
             <h2><span class="material-icons">code</span> <strong>DoLabel</strong></h2>
-            <p><span class="material-icons">book</span> Метод для отображения текстовой метки в заданной области CUIRect. Принимает параметры: прямоугольник, текст, размер шрифта и выравнивание.</p>
+            <p>Метод для отображения текстовой метки в заданной области CUIRect. Принимает параметры: прямоугольник, текст, размер шрифта и выравнивание.</p>
             <p>Пример: <code>UI()->DoLabel(&Rect, "Settings", 20.0f, TEXTALIGN_CENTER);</code></p>
         </div>
     </div>
