@@ -74,26 +74,69 @@
             margin: 10px 0;
         }
 
-        .command h2 {
+        .command {
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .command-header {
             display: flex;
             align-items: center;
             gap: 8px;
             font-size: 20px;
             margin: 10px 0;
-            background: linear-gradient(90deg, #0000ff, #000000, #0000ff, #000000, #0000ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: gradientShift 2s linear infinite;
-            background-size: 200% 100%;
+            position: relative;
         }
 
-        .command h2 .material-icons,
-        .command h2 strong {
-            background: inherit;
+        .gradient-text {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            color: transparent;
+        }
+
+        .gradient-text::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #0000ff, #000000, #0000ff);
+            background-size: 200% 100%;
+            animation: gradientShift 3s linear infinite;
+            -webkit-text-fill-color: transparent;
             -webkit-background-clip: text;
             background-clip: text;
+            z-index: 1;
+        }
+
+        .gradient-text span.material-icons,
+        .gradient-text strong {
             color: transparent;
+            position: relative;
+            z-index: 1;
+        }
+
+        .gradient-text span.material-icons::before,
+        .gradient-text strong::before {
+            content: attr(data-icon);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #0000ff, #000000, #0000ff);
+            background-size: 200% 100%;
+            animation: gradientShift 3s linear infinite;
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            z-index: 1;
         }
 
         @keyframes gradientShift {
@@ -101,18 +144,22 @@
             100% { background-position: 200% 50%; }
         }
 
+        .command-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .command.active .command-content {
+            max-height: 1000px;
+            transition: max-height 0.5s ease-in;
+        }
+
         p, li {
             color: #e0e0e0;
             font-size: 16px;
             line-height: 1.6;
             margin: 8px 0;
-        }
-
-        .command {
-            margin: 15px 0;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
         }
 
         .command strong {
@@ -163,6 +210,62 @@
             0% { transform: translate(0, 0); opacity: 1; }
             100% { transform: translate(-100vw, 100vh); opacity: 0; }
         }
+
+        @media (max-width: 768px) {
+            .navbar {
+                top: 10px;
+                gap: 8px;
+            }
+            
+            .navbar a {
+                font-size: 14px;
+                padding: 6px 12px;
+            }
+            
+            .content {
+                padding: 12px;
+                margin-top: 50px;
+            }
+            
+            h1 {
+                font-size: 20px;
+            }
+            
+            .command-header {
+                font-size: 16px;
+            }
+            
+            p, li {
+                font-size: 13px;
+            }
+            
+            .bubble {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                position: static;
+                margin-top: 10px;
+            }
+            
+            .content {
+                margin-top: 20px;
+                width: 95%;
+            }
+            
+            .command-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .command p, .command li {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -187,29 +290,50 @@
 
     <div id="commands" class="content">
         <h1>Команды для вкладок меню настроек</h1>
-        <div class="command">
-            <h2><span class="material-icons">code</span> <strong>CUIRect SomeThing</strong></h2>
-            <p>Это структура, представляющая прямоугольную область экрана в пикселях. Она имеет поля x, y (координаты верхнего левого угла), w (ширина) и h (высота). Используется для размещения элементов интерфейса.</p>
-            <p>Переменные: Это экземпляры CUIRect, которые представляют подмодули (секции) внутри вкладки.</p>
-            <p>Каждая переменная — это область, где будут рендериться определённые настройки. Эти области создаются путём разделения основной области (MainView) на части с помощью методов вроде VSplitMid или HSplitTop.</p>
+        <div class="command" onclick="toggleCommand(this)">
+            <div class="command-header">
+                <span class="gradient-text" data-text="code CUIRect SomeThing">
+                    <span class="material-icons" data-icon="code">code</span> <strong>CUIRect SomeThing</strong>
+                </span>
+            </div>
+            <div class="command-content">
+                <p><span class="material-icons">lightbulb</span> Это структура, представляющая прямоугольную область экрана в пикселях. Она имеет поля x, y (координаты верхнего левого угла), w (ширина) и h (высота). Используется для размещения элементов интерфейса.</p>
+                <p><span class="material-icons">lightbulb</span> Переменные: Это экземпляры CUIRect, которые представляют подмодули (секции) внутри вкладки.</p>
+                <p><span class="material-icons">lightbulb</span> Каждая переменная — это область, где будут рендериться определённые настройки. Эти области создаются путём разделения основной области (MainView) на части с помощью методов вроде VSplitMid или HSplitTop.</p>
+            </div>
         </div>
-        <div class="command">
-            <h2><span class="material-icons">code</span> <strong>VSplitMid</strong></h2>
-            <p>Метод класса CUIRect, который делит прямоугольник вертикально пополам на две новые области.</p>
-            <p><strong>Пример:</strong> <code>MainView.VSplitMid(&OtherSettings, &OtherSettings2);</code></p>
-            <ul>
-                <li><span class="material-icons">book</span> <strong>MainView</strong> — исходная область (обычно вся вкладка).</li>
-                <li><span class="material-icons">book</span> <strong>&OtherSettings</strong> — левая половина.</li>
-                <li><span class="material-icons">book</span> <strong>&OtherSettings2</strong> — правая половина.</li>
-            </ul>
+        <div class="command" onclick="toggleCommand(this)">
+            <div class="command-header">
+                <span class="gradient-text" data-text="code VSplitMid">
+                    <span class="material-icons" data-icon="code">code</span> <strong>VSplitMid</strong>
+                </span>
+            </div>
+            <div class="command-content">
+                <p>Метод класса CUIRect, который делит прямоугольник вертикально пополам на две новые области.</p>
+                <p><strong>Пример:</strong> <code>MainView.VSplitMid(&OtherSettings, &OtherSettings2);</code></p>
+                <ul>
+                    <li><span class="material-icons">book</span> <strong>MainView</strong> — исходная область (обычно вся вкладка).</li>
+                    <li><span class="material-icons">book</span> <strong>&OtherSettings</strong> — левая половина.</li>
+                    <li><span class="material-icons">book</span> <strong>&OtherSettings2</strong> — правая половина.</li>
+                </ul>
+            </div>
         </div>
-        <div class="command">
-            <h2><span class="material-icons">code</span> <strong>DoLabel</strong></h2>
-            <p>Метод для отображения текстовой метки в заданной области CUIRect. Принимает параметры: прямоугольник, текст, размер шрифта и выравнивание.</p>
-            <p>Пример: <code>UI()->DoLabel(&Rect, "Settings", 20.0f, TEXTALIGN_CENTER);</code></p>
+        <div class="command" onclick="toggleCommand(this)">
+            <div class="command-header">
+                <span class="gradient-text" data-text="code DoLabel">
+                    <span class="material-icons" data-icon="code">code</span> <strong>DoLabel</strong>
+                </span>
+            </div>
+            <div class="command-content">
+                <p>Метод для отображения текстовой метки в заданной области CUIRect. Принимает параметры: прямоугольник, текст, размер шрифта и выравнивание.</p>
+                <p>Пример: <code>UI()->DoLabel(&Rect, "Settings", 20.0f, TEXTALIGN_CENTER);</code></p>
+            </div>
         </div>
     </div>
 
     <script src="script.js"></script>
+
+    
+
 </body>
 </html>

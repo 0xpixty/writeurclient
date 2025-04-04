@@ -4,6 +4,7 @@ function showContent(id) {
     });
     document.getElementById(id).classList.add('active');
 }
+
 function createStar() {
     const star = document.createElement('div');
     star.className = 'star';
@@ -16,3 +17,18 @@ function createStar() {
 }
 
 setInterval(createStar, 50);
+
+function showContent(id) {
+    const contents = document.querySelectorAll('.content');
+    contents.forEach(content => {
+        content.classList.remove('active');
+    });
+    
+    const activeContent = document.getElementById(id);
+    if (activeContent) {
+        activeContent.classList.add('active');
+    }
+}
+function toggleCommand(element) {
+    element.classList.toggle('active');
+}
