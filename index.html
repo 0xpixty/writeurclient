@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Сайт с шарами и стеклом</title>
+    <title>DDNet course</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         body {
             margin: 0;
@@ -35,6 +36,9 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             transition: all 0.3s ease;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .navbar a:hover {
@@ -73,6 +77,12 @@
             color: #ff00ff;
         }
 
+        .command h2, .command p {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
         .bubble {
             position: absolute;
             border-radius: 50%;
@@ -97,8 +107,8 @@
 </head>
 <body>
     <div class="navbar">
-        <a onclick="showContent('home')">Главная</a>
-        <a onclick="showContent('commands')">menus_settings</a>
+        <a onclick="showContent('home')"><span class="material-icons">home</span> Главная</a>
+        <a onclick="showContent('commands')"><span class="material-icons">settings</span> menus_settings</a>
     </div>
 
     <div class="bubble"></div>
@@ -109,35 +119,28 @@
 
     <div id="home" class="content active">
         <h1>Добро пожаловать!</h1>
-        <p>Это мой сайт с эффектом стекла и неоновыми шарами.</p>
+        <p>На данном сайте вы найдете обьяснение к методам кода ,основанные на открытом коде DDNet</p>
     </div>
 
     <div id="commands" class="content">
-        <h1>Экскурс по командам</h1>
+        <h1>Команды для вкладок меню настроек</h1>
         <div class="command">
-            <h2><strong>git clone</strong></h2>
-            <p>Клонирует репозиторий с GitHub на твой компьютер.</p>
+            <h2><span class="material-icons">code</span> <strong>CUIRect</strong></h2>
+            <p><span class="material-icons">book</span> Это структура, представляющая прямоугольную область экрана в пикселях. Она имеет поля x, y (координаты верхнего левого угла), w (ширина) и h (высота). Используется для размещения элементов интерфейса.</p>
             <p>Пример: <code>git clone https://github.com/username/repo.git</code></p>
         </div>
         <div class="command">
-            <h2><strong>git add</strong></h2>
-            <p>Добавляет изменения в индекс для следующего коммита.</p>
+            <h2><span class="material-icons">code</span> <strong>git add</strong></h2>
+            <p><span class="material-icons">book</span> Добавляет изменения в индекс для следующего коммита.</p>
             <p>Пример: <code>git add index.html</code></p>
         </div>
         <div class="command">
-            <h2><strong>git commit</strong></h2>
-            <p>Сохраняет изменения в локальном репозитории с сообщением.</p>
+            <h2><span class="material-icons">code</span> <strong>git commit</strong></h2>
+            <p><span class="material-icons">book</span> Сохраняет изменения в локальном репозитории с сообщением.</p>
             <p>Пример: <code>git commit -m "Добавил новую страницу"</code></p>
         </div>
     </div>
 
-    <script>
-        function showContent(id) {
-            document.querySelectorAll('.content').forEach(content => {
-                content.classList.remove('active');
-            });
-            document.getElementById(id).classList.add('active');
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
