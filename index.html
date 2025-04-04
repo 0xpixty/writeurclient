@@ -2,9 +2,75 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>DDNet course</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сайт с шарами и стеклом</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #1a1a2e; /* Темный фон для контраста */
+            overflow: hidden;
+        }
+
+        /* Контейнер для контента */
+        .content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1); /* Полупрозрачный фон */
+            border-radius: 15px;
+            backdrop-filter: blur(10px); /* Эффект размытия */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        h1, p {
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        /* Анимация шаров */
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ff00ff, #800080);
+            box-shadow: 0 0 20px #ff00ff, 0 0 40px #800080; /* Неоновый эффект */
+            animation: float 10s infinite ease-in-out;
+            opacity: 0.7;
+        }
+
+        /* Разные размеры и позиции шаров */
+        .bubble:nth-child(1) { width: 100px; height: 100px; left: 10%; top: 20%; animation-duration: 12s; }
+        .bubble:nth-child(2) { width: 80px; height: 80px; left: 30%; top: 50%; animation-duration: 15s; }
+        .bubble:nth-child(3) { width: 120px; height: 120px; left: 60%; top: 30%; animation-duration: 10s; }
+        .bubble:nth-child(4) { width: 60px; height: 60px; left: 80%; top: 70%; animation-duration: 13s; }
+        .bubble:nth-child(5) { width: 90px; height: 90px; left: 20%; top: 80%; animation-duration: 11s; }
+
+        /* Анимация движения шаров */
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-50vh) translateX(20px); }
+            100% { transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
-    <h1>Привет, это мой сайт!</h1>
+    <!-- Шары для фона -->
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+
+    <!-- Контент -->
+    <div class="content">
+        <h1>Добро пожаловать!</h1>
+        <p>Это мой сайт с эффектом стекла и неоновыми шарами.</p>
+    </div>
 </body>
 </html>
