@@ -10,48 +10,84 @@
             padding: 0;
             height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: #1a1a2e; /* Темный фон для контраста */
+            background: #1a1a2e;
             overflow: hidden;
         }
 
-        /* Контейнер для контента */
+        .navbar {
+            position: absolute;
+            top: 20px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .navbar a:hover {
+            background: rgba(0, 206, 209, 0.3);
+            color: #00CED1;
+            box-shadow: 0 0 15px rgba(0, 206, 209, 0.5);
+        }
+
         .content {
             position: relative;
             z-index: 1;
             text-align: center;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.1); /* Полупрозрачный фон */
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 15px;
-            backdrop-filter: blur(10px); /* Эффект размытия */
+            backdrop-filter: blur(10px);
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.2);
+            display: none;
         }
 
-        h1, p {
+        .content.active {
+            display: block;
+        }
+
+        h1, h2, p {
             color: #fff;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
         }
 
-        /* Анимация шаров */
+        .command {
+            margin: 15px 0;
+        }
+
+        .command strong {
+            color: #ff00ff;
+        }
+
         .bubble {
             position: absolute;
             border-radius: 50%;
             background: radial-gradient(circle at 30% 30%, #ff00ff, #800080);
-            box-shadow: 0 0 20px #ff00ff, 0 0 40px #800080; /* Неоновый эффект */
+            box-shadow: 0 0 20px #ff00ff, 0 0 40px #800080;
             animation: float 10s infinite ease-in-out;
             opacity: 0.7;
         }
 
-        /* Разные размеры и позиции шаров */
         .bubble:nth-child(1) { width: 100px; height: 100px; left: 10%; top: 20%; animation-duration: 12s; }
         .bubble:nth-child(2) { width: 80px; height: 80px; left: 30%; top: 50%; animation-duration: 15s; }
         .bubble:nth-child(3) { width: 120px; height: 120px; left: 60%; top: 30%; animation-duration: 10s; }
         .bubble:nth-child(4) { width: 60px; height: 60px; left: 80%; top: 70%; animation-duration: 13s; }
         .bubble:nth-child(5) { width: 90px; height: 90px; left: 20%; top: 80%; animation-duration: 11s; }
 
-        /* Анимация движения шаров */
         @keyframes float {
             0% { transform: translateY(0); }
             50% { transform: translateY(-50vh) translateX(20px); }
@@ -60,17 +96,48 @@
     </style>
 </head>
 <body>
-    <!-- Шары для фона -->
+    <div class="navbar">
+        <a onclick="showContent('home')">Главная</a>
+        <a onclick="showContent('commands')">menus_settings</a>
+    </div>
+
     <div class="bubble"></div>
     <div class="bubble"></div>
     <div class="bubble"></div>
     <div class="bubble"></div>
     <div class="bubble"></div>
 
-    <!-- Контент -->
-    <div class="content">
+    <div id="home" class="content active">
         <h1>Добро пожаловать!</h1>
         <p>Это мой сайт с эффектом стекла и неоновыми шарами.</p>
     </div>
+
+    <div id="commands" class="content">
+        <h1>Экскурс по командам</h1>
+        <div class="command">
+            <h2><strong>git clone</strong></h2>
+            <p>Клонирует репозиторий с GitHub на твой компьютер.</p>
+            <p>Пример: <code>git clone https://github.com/username/repo.git</code></p>
+        </div>
+        <div class="command">
+            <h2><strong>git add</strong></h2>
+            <p>Добавляет изменения в индекс для следующего коммита.</p>
+            <p>Пример: <code>git add index.html</code></p>
+        </div>
+        <div class="command">
+            <h2><strong>git commit</strong></h2>
+            <p>Сохраняет изменения в локальном репозитории с сообщением.</p>
+            <p>Пример: <code>git commit -m "Добавил новую страницу"</code></p>
+        </div>
+    </div>
+
+    <script>
+        function showContent(id) {
+            document.querySelectorAll('.content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(id).classList.add('active');
+        }
+    </script>
 </body>
 </html>
